@@ -1,0 +1,46 @@
+/* Barra superior: logo de Combuses (versión negativa para fondo oscuro) y etiqueta de la página */
+.barra{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.75rem 1rem;padding:.25rem 0 1.1rem;border-bottom:1px solid var(--line)}
+.logo{display:block;height:clamp(1.6rem,7vw,2.5rem);width:auto}
+@media (max-width:420px){.barra .marca{letter-spacing:.12em;padding:.35rem .6rem}}
+
+/* Encabezado: calabaza iluminada, título y plazo */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:1.5rem;align-items:center;padding:2.25rem 0 2.25rem}
+
+.hero-arte{position:relative;isolation:isolate;display:grid;place-items:center}
+.hero-arte::before{content:"";position:absolute;inset:-40%;z-index:-1;border-radius:50%;background:radial-gradient(circle,rgba(255,214,140,.30),rgba(255,138,31,.12) 42%,transparent 70%)}
+.hero-arte img{width:clamp(5.5rem,18vw,8.5rem);height:auto;filter:drop-shadow(0 14px 28px rgba(255,122,26,.45))}
+@media (prefers-reduced-motion:no-preference){
+  .hero-arte img{animation:flotar 6s ease-in-out infinite}
+}
+@keyframes flotar{50%{transform:translateY(-8px) rotate(-2deg)}}
+
+.marca{display:inline-flex;margin:0;padding:.4rem .75rem;border:1px solid rgba(255,196,77,.3);border-radius:999px;background:rgba(255,196,77,.08);color:var(--candy);font:700 .72rem/1 var(--font-body);letter-spacing:.2em;text-transform:uppercase}
+h1{font:800 clamp(2.1rem,6.5vw,3.4rem)/1.02 var(--font-display);letter-spacing:-.035em;margin:0 0 .9rem;text-wrap:balance}
+.brillo{background:linear-gradient(90deg,#FFC44D,#FF7A1A 55%,#FF4D6D);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 18px rgba(255,122,26,.35))}
+
+/* Plazo con punto "en vivo"; plazo.js marca data-estado="cerrado" cuando no está abierto */
+.plazo{display:inline-flex;align-items:center;gap:.55rem;padding:.5rem 1rem .5rem .85rem;border:1px solid rgba(255,138,31,.38);border-radius:999px;background:rgba(255,138,31,.10);color:var(--ink);font-weight:600;font-size:.95rem}
+.plazo::before{content:"";flex:none;width:.55rem;height:.55rem;border-radius:50%;background:var(--pumpkin)}
+@media (prefers-reduced-motion:no-preference){
+  .plazo::before{animation:pulso 2s ease-out infinite}
+}
+@keyframes pulso{0%{box-shadow:0 0 0 0 rgba(255,138,31,.65)}100%{box-shadow:0 0 0 .6rem rgba(255,138,31,0)}}
+.plazo[data-estado="cerrado"]::before{animation:none;background:var(--muted)}
+.plazo b{font:800 1.3rem/1 var(--font-display);color:var(--candy)}
+.sub{color:var(--muted);margin:.9rem 0 0;max-width:36rem;text-wrap:pretty}
+
+/* Formulario: etiqueta, título, logo de Halloween (sin fondo, sobre el cielo) y justo debajo el plazo, todo centrado */
+.hero-centrado{grid-template-columns:1fr;justify-items:center;text-align:center;padding-top:1.5rem}
+.hero-centrado .marca{margin-bottom:1rem}
+.hero-centrado .sub{margin-inline:auto}
+.logo-halloween{display:block;width:min(80%,24rem);height:auto;margin:.6rem auto 1.1rem;filter:drop-shadow(0 18px 40px rgba(0,0,0,.55)) drop-shadow(0 0 36px rgba(255,138,31,.16))}
+@media (prefers-reduced-motion:no-preference){
+  .logo-halloween{animation:aparecer .9s cubic-bezier(.2,.8,.2,1) both}
+}
+@keyframes aparecer{from{opacity:0;transform:translateY(12px) scale(.97)}}
+
+/* En celular: calabaza arriba y texto centrado */
+@media (max-width:520px){
+  .hero{grid-template-columns:1fr;justify-items:center;text-align:center;gap:.75rem;padding-top:1.75rem}
+  .hero-arte img{width:6rem}
+}

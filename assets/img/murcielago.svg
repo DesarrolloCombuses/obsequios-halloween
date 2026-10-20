@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 40">
+  <style>
+    .ala { transform-origin: 50px 17px; }
+    @media (prefers-reduced-motion: no-preference) {
+      .ala { animation: aleteo .32s ease-in-out infinite alternate; }
+      @keyframes aleteo { to { transform: scaleY(.45); } }
+    }
+  </style>
+  <g fill="#5B4A86">
+    <path class="ala" d="M52 16Q72 3 98 8Q90 15 90 25Q84 19 77 21Q73 26 69 33Q65 25 58 26Q55 28 52 30Z"/>
+    <path class="ala" d="M48 16Q28 3 2 8Q10 15 10 25Q16 19 23 21Q27 26 31 33Q35 25 42 26Q45 28 48 30Z"/>
+    <ellipse cx="50" cy="23" rx="5.5" ry="9"/>
+    <circle cx="50" cy="13" r="4.5"/>
+    <path d="M46.5 11L46 4l3 5zM53.5 11L54 4l-3 5z"/>
+  </g>
+  <circle cx="48.3" cy="13" r=".9" fill="#FFD166"/>
+  <circle cx="51.7" cy="13" r=".9" fill="#FFD166"/>
+</svg>

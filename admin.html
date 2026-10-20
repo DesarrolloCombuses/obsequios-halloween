@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Panel de inscripciones – Combuses</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0C0716">
+<meta name="color-scheme" content="dark">
+<!-- Evita que iOS convierta cédulas y documentos del listado en enlaces de llamada -->
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="assets/img/calabaza.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest-admin.webmanifest">
+<link rel="apple-touch-icon" href="assets/iconos/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Panel Halloween">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/ambiente.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/formulario.css">
+<link rel="stylesheet" href="css/listado.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="preconnect" href="https://cbplebkmxrkaafqdhiyi.supabase.co">
+<script type="module" src="js/admin.js"></script>
+</head>
+<body>
+<!-- Fondo decorativo: estrellas, luna, murciélagos y neblina -->
+<div class="cielo" aria-hidden="true">
+  <div class="estrellas"></div>
+  <div class="luna"></div>
+  <img class="murcielago m1" src="assets/img/murcielago.svg" alt="">
+  <img class="murcielago m2" src="assets/img/murcielago.svg" alt="">
+  <div class="niebla"></div>
+</div>
+
+<div class="wrap">
+
+  <header class="barra">
+    <img class="logo" src="assets/img/marca/combuses-logo-negativo.png" alt="Combuses" width="623" height="125">
+    <span class="marca">Panel del equipo</span>
+  </header>
+
+  <div class="hero">
+    <div class="hero-arte"><img src="assets/img/calabaza.svg" alt="" width="120" height="120"></div>
+    <div>
+      <h1>Panel de <span class="brillo">inscripciones</span></h1>
+      <p class="sub">Consulta y descarga las inscripciones y, el día de la entrega, marca quién asistió. Solo para personas autorizadas.</p>
+    </div>
+  </div>
+
+  <div id="mensaje" class="msg hidden" role="status" aria-live="polite"></div>
+
+  <form id="acceso" class="acceso hidden" novalidate>
+    <fieldset>
+      <legend>Ingresar</legend>
+      <div class="grid">
+        <div class="full">
+          <label for="correo">Correo</label>
+          <input id="correo" type="email" autocomplete="username" inputmode="email" required>
+          <div class="error" id="e-correo"></div>
+        </div>
+        <div class="full">
+          <label for="clave">Contraseña</label>
+          <input id="clave" type="password" autocomplete="current-password" required>
+          <div class="error" id="e-clave"></div>
+        </div>
+      </div>
+    </fieldset>
+    <button class="btn" type="submit" id="entrar">Entrar</button>
+  </form>
+
+  <section id="panel" class="lista hidden" aria-labelledby="tituloLista">
+    <div class="sesion">
+      <span>Sesión: <b id="usuario"></b> <span class="envivo hidden" id="enVivo">En vivo</span></span>
+      <span class="sesion-acciones">
+        <button class="btn ghost" type="button" id="actualizar">Actualizar</button>
+        <button class="btn ghost" type="button" id="salir">Cerrar sesión</button>
+      </span>
+    </div>
+    <header>
+      <h2 id="tituloLista">Entrega de obsequios</h2>
+      <button class="btn ghost" type="button" id="exportar">Descargar listado (CSV)</button>
+    </header>
+    <!-- Contadores de asistencia; al tocarlos filtran el listado -->
+    <div class="filtros" role="group" aria-label="Filtrar por asistencia">
+      <button type="button" class="filtro" data-filtro="todos" aria-pressed="true">Inscritos <b id="cTodos">0</b></button>
+      <button type="button" class="filtro" data-filtro="pendiente" aria-pressed="false">Pendientes <b id="cPendiente">0</b></button>
+      <button type="button" class="filtro si" data-filtro="asistio" aria-pressed="false">Asistieron <b id="cAsistio">0</b></button>
+      <button type="button" class="filtro no" data-filtro="no_asistio" aria-pressed="false">No asistieron <b id="cNoAsistio">0</b></button>
+    </div>
+    <input id="buscar" class="buscador" type="search" placeholder="Buscar por cédula o nombre" aria-label="Buscar por cédula o nombre" autocomplete="off" enterkeyhint="search">
+    <p class="resumen" id="resumenLista"></p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Empleado</th><th>Niño o niña</th><th>Edad</th><th>Parentesco</th><th>Asistencia</th><th></th></tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+      <p class="empty" id="vacio">Cargando inscripciones…</p>
+    </div>
+  </section>
+
+  <footer class="pie">
+    <span>Combuses · Panel de inscripciones</span>
+    <span class="pie-acciones">
+      <button class="btn ghost hidden" type="button" id="instalarApp">Instalar app</button>
+      <button class="version" type="button" id="appVersion" title="Buscar actualización">v…</button>
+    </span>
+  </footer>
+</div>
+</body>
+</html>

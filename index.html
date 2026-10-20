@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es-CO">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Obsequios de Halloween – Combuses</title>
+<meta name="theme-color" content="#0C0716">
+<meta name="color-scheme" content="dark">
+<!-- Evita que iOS convierta cédulas y documentos del listado en enlaces de llamada -->
+<meta name="format-detection" content="telephone=no">
+<link rel="icon" href="assets/img/calabaza.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/iconos/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-title" content="Halloween">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/ambiente.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/formulario.css">
+<link rel="preconnect" href="https://cbplebkmxrkaafqdhiyi.supabase.co">
+<script type="module" src="js/main.js"></script>
+</head>
+<body>
+<!-- Fondo decorativo: estrellas, luna, murciélagos y neblina -->
+<div class="cielo" aria-hidden="true">
+  <div class="estrellas"></div>
+  <div class="luna"></div>
+  <img class="murcielago m1" src="assets/img/murcielago.svg" alt="">
+  <img class="murcielago m2" src="assets/img/murcielago.svg" alt="">
+  <img class="murcielago m3" src="assets/img/murcielago.svg" alt="">
+  <div class="niebla"></div>
+</div>
+
+<div class="wrap">
+
+  <header class="hero hero-centrado">
+    <div>
+      <span class="marca">Halloween 2026</span>
+      <h1>Obsequios de <span class="brillo">Halloween</span> para niños</h1>
+      <!-- Logo de Halloween de Combuses, junto al plazo -->
+      <picture>
+        <source type="image/webp" srcset="assets/img/marca/logo-halloween-640.webp 640w, assets/img/marca/logo-halloween.webp 1000w" sizes="(max-width: 30rem) 80vw, 24rem">
+        <img class="logo-halloween" src="assets/img/marca/logo-halloween.png" alt="Combuses" width="1000" height="616" fetchpriority="high">
+      </picture>
+      <div class="plazo" id="plazo">Inscripciones abiertas</div>
+      <p class="sub">Combuses entrega un obsequio a cada niño o niña de 0 a 10 años a cargo de sus empleados. Con tu cédula de empleado puedes inscribir a todos los niños a tu cargo. Inscripciones hasta el <span id="textoCierre">viernes 23 de octubre de 2026</span>.</p>
+    </div>
+  </header>
+
+  <div id="cerrado" class="closed hidden" role="status">
+    <h2 id="cerradoTitulo">Inscripciones cerradas</h2>
+    <p id="cerradoTexto"></p>
+  </div>
+
+  <div id="mensaje" class="msg hidden" role="status" aria-live="polite"></div>
+
+  <!-- La inscripción va en tres pasos, uno a la vez (js/componentes/pasos.js). El botón principal de cada paso es
+       "submit" para que Enter avance; js/componentes/formulario.js decide qué hacer según el paso. -->
+  <form id="form" novalidate>
+    <ol class="pasos" aria-label="Pasos de la inscripción">
+      <li data-paso-marca="1" aria-current="step"><span>1</span>Tu cédula</li>
+      <li data-paso-marca="2"><span>2</span>Tus niños</li>
+      <li data-paso-marca="3"><span>3</span>Confirmar</li>
+    </ol>
+
+    <!-- Paso 1: el empleado se identifica -->
+    <section class="paso" data-paso="1" aria-labelledby="tituloPaso1">
+      <h2 class="paso-titulo" id="tituloPaso1" tabindex="-1">Identifícate con tu cédula</h2>
+      <p class="paso-ayuda">Ten a mano los nombres y edades de <strong>todos</strong> tus niños de 0 a 10 años: solo puedes inscribirte una vez.</p>
+      <!-- "densa": en escritorio el celular sube junto a la cédula; en celular el nombre queda justo debajo de la cédula -->
+      <div class="grid densa">
+        <div>
+          <label for="ccAcudiente">Cédula <span class="hint">Traemos tu nombre y cargo</span></label>
+          <input id="ccAcudiente" inputmode="numeric" required maxlength="10" autocomplete="off" aria-describedby="empleado">
+          <div class="error" id="e-ccAcudiente"></div>
+        </div>
+        <!-- Nombre y cargo del empleado encontrado; lo llena js/componentes/empleado.js -->
+        <div class="full empleado hidden" id="empleado" role="status" aria-live="polite"></div>
+        <div>
+          <label for="celular">Celular <span class="hint">10 dígitos, ej. 3001234567</span></label>
+          <input id="celular" type="tel" inputmode="numeric" required maxlength="10">
+          <div class="error" id="e-celular"></div>
+        </div>
+      </div>
+      <div class="paso-acciones">
+        <button class="btn" type="submit" id="continuar">Continuar</button>
+      </div>
+    </section>
+
+    <!-- Paso 2: todos los niños de una vez -->
+    <section class="paso hidden" data-paso="2" aria-labelledby="tituloPaso2">
+      <h2 class="paso-titulo" id="tituloPaso2" tabindex="-1">Inscribe a todos tus niños</h2>
+      <div class="empleado saludo">
+        <strong id="saludoNombre"></strong>
+        <span id="saludoCargo"></span>
+        <button type="button" class="enlace" id="cambiarCedula">Cambiar cédula</button>
+      </div>
+      <p class="aviso-unico" role="note"><span><strong>Es una sola inscripción.</strong> Agrega aquí a todos tus niños y niñas de 0 a 10 años: después de enviarla no podrás agregar más ni hacer cambios.</span></p>
+      <div id="ninos"></div>
+      <button class="btn ghost agregar" type="button" id="agregar">Agregar otro niño o niña</button>
+      <p class="resumen" id="resumen"></p>
+      <label class="check"><input type="checkbox" id="autoriza" required>
+        <span>Como acudiente, autorizo a Combuses para el tratamiento de los datos personales de los menores inscritos con el fin de la entrega de obsequios, conforme a la Ley 1581 de 2012.</span>
+      </label>
+      <div class="error" id="e-autoriza"></div>
+      <div class="paso-acciones">
+        <button class="btn" type="submit" id="revisar">Revisar inscripción</button>
+      </div>
+    </section>
+
+    <!-- Paso 3: confirmar que están todos antes de enviar -->
+    <section class="paso hidden" data-paso="3" aria-labelledby="tituloPaso3">
+      <h2 class="paso-titulo" id="tituloPaso3" tabindex="-1">¿Están todos tus niños?</h2>
+      <p class="paso-ayuda" id="confirmaTexto"></p>
+      <ul class="confirma-lista" id="confirmaLista"></ul>
+      <p class="aviso-unico" role="note"><span>Revisa que no te falte ninguno. <strong>Después de inscribir no podrás agregar más niños.</strong></span></p>
+      <div class="paso-acciones">
+        <button class="btn" type="submit" id="enviar">Sí, están todos: inscribir</button>
+        <button class="btn ghost" type="button" id="volver">No, volver y agregar</button>
+      </div>
+    </section>
+  </form>
+
+  <!-- Inscripción terminada -->
+  <section id="listo" class="listo hidden" tabindex="-1" aria-labelledby="listoTitulo">
+    <h2 id="listoTitulo">¡Inscripción completa!</h2>
+    <p id="listoTexto"></p>
+    <ul class="confirma-lista" id="listoLista"></ul>
+    <button class="btn ghost" type="button" id="otraInscripcion">Inscribir a otro empleado</button>
+  </section>
+
+  <footer class="pie">
+    <span>Combuses · Obsequios de Halloween 2026</span>
+    <span class="pie-acciones">
+      <button class="btn ghost hidden" type="button" id="instalarApp">Instalar app</button>
+      <button class="version" type="button" id="appVersion" title="Buscar actualización">v…</button>
+    </span>
+  </footer>
+</div>
+
+<!-- Tarjeta de cada niño; la clona js/componentes/ninos.js -->
+<template id="tplNino">
+  <div class="nino">
+    <div class="nino-top">
+      <h3 data-titulo>Niño o niña 1</h3>
+      <button type="button" class="quitar" data-quitar>Quitar</button>
+    </div>
+    <div class="grid">
+      <div class="full">
+        <label data-for="nombres">Nombres y apellidos</label>
+        <input data-campo="nombres" maxlength="80" autocomplete="off">
+        <div class="error" data-error="nombres"></div>
+      </div>
+      <div>
+        <label data-for="edad">Edad</label>
+        <!-- Las edades (de 0 a EDAD_MAX años) las agrega js/componentes/ninos.js -->
+        <select data-campo="edad">
+          <option value="">Selecciona</option>
+        </select>
+        <div class="error" data-error="edad"></div>
+      </div>
+      <div>
+        <label data-for="sexo">Obsequio para</label>
+        <select data-campo="sexo">
+          <option value="">Selecciona</option>
+          <option>Niño</option><option>Niña</option>
+        </select>
+        <div class="error" data-error="sexo"></div>
+      </div>
+      <div class="full">
+        <label data-for="parentesco">Parentesco con el acudiente</label>
+        <select data-campo="parentesco">
+          <option value="">Selecciona</option>
+          <option>Hijo(a)</option><option>Nieto(a)</option><option>Sobrino(a)</option>
+          <option>Hermano(a)</option><option>Otro</option>
+        </select>
+        <div class="error" data-error="parentesco"></div>
+      </div>
+    </div>
+  </div>
+</template>
+</body>
+</html>

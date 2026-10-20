@@ -1,0 +1,81 @@
+/* Base: reinicio, tipografía, controles de formulario, botones y mensajes */
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scrollbar-color:#3A2A5E transparent;-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-tap-highlight-color:rgba(255,138,31,.18)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100vh;min-height:100dvh;background:var(--bg);color:var(--ink);font:400 1rem/1.6 var(--font-body);-webkit-font-smoothing:antialiased}
+::selection{background:rgba(255,138,31,.35)}
+/* Los márgenes laterales respetan la muesca del iPhone en horizontal */
+.wrap{position:relative;z-index:1;max-width:44rem;margin:0 auto;padding:1.5rem max(1.25rem,env(safe-area-inset-right,0px)) 4rem max(1.25rem,env(safe-area-inset-left,0px))}
+.hidden{display:none !important}
+button,input,select,label{touch-action:manipulation}
+
+/* Controles. Letra de al menos 16px: con menos, iOS hace zoom al tocar el campo */
+label{display:block;font-weight:600;margin-bottom:.4rem;font-size:.95rem}
+.hint{display:block;font-weight:400;color:var(--muted);font-size:.85rem}
+input,select,textarea{width:100%;min-width:0;min-height:3rem;font:inherit;font-size:max(1rem,16px);color:var(--ink);background-color:var(--campo);border:1px solid var(--line);border-radius:.9rem;padding:.75rem .95rem;transition:border-color .15s,box-shadow .15s,background-color .15s}
+input:not([type="checkbox"]),select,textarea{-webkit-appearance:none;appearance:none}
+select{cursor:pointer;padding-right:2.6rem;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23B4A9D1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 8l5 5 5-5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .9rem center;background-size:1.1rem}
+select option{background:var(--surface);color:var(--ink)}
+/* Fecha: en iOS el campo vacío se encoge y el valor sale centrado */
+input[type="date"]{display:block}
+input::-webkit-date-and-time-value{text-align:left;min-height:1.6em}
+input::-webkit-calendar-picker-indicator{cursor:pointer;opacity:.75}
+textarea{min-height:4.5rem;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid transparent;border-color:var(--pumpkin);box-shadow:0 0 0 4px var(--focus-anillo)}
+button:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+[aria-invalid="true"]{border-color:var(--err);box-shadow:0 0 0 3px var(--err-bg)}
+.error{color:var(--err);font-size:.85rem;font-weight:500;margin-top:.35rem;min-height:0}
+.error:empty{margin-top:0}
+.check{display:flex;gap:.8rem;align-items:flex-start;font-weight:400;font-size:.92rem;color:var(--muted);background:var(--campo);border:1px solid var(--line);border-radius:1rem;padding:1rem 1.1rem;cursor:pointer;transition:border-color .15s,background-color .15s,color .15s}
+.check:has(input:checked){border-color:rgba(255,138,31,.5);background:rgba(255,138,31,.07);color:var(--ink)}
+.check input{width:1.25rem;height:1.25rem;min-height:0;margin-top:.15rem;flex:none;accent-color:var(--pumpkin);box-shadow:none}
+
+/* Botones */
+.btn{font:700 1.08rem/1 var(--font-display);letter-spacing:.01em;border:0;border-radius:1rem;padding:1.1rem 1.4rem;cursor:pointer;background:var(--degradado);color:var(--pumpkin-ink);width:100%;box-shadow:var(--brillo-naranja),inset 0 1px 0 rgba(255,255,255,.35);transition:transform .15s,box-shadow .2s,filter .15s}
+.btn:active{transform:translateY(0)}
+.btn:disabled,td button:disabled{opacity:.6;cursor:progress;transform:none;filter:none}
+.btn.ghost{background:rgba(255,255,255,.04);color:var(--ink);border:1px solid var(--line-fuerte);box-shadow:none;width:auto;font-size:.95rem;padding:.7rem 1.05rem}
+
+/* Efectos al pasar el mouse: solo donde hay mouse, para que no queden "pegados" al tocar en celular */
+@media (hover:hover){
+  input:hover,select:hover,textarea:hover{border-color:var(--line-fuerte);background-color:var(--campo-hover)}
+  .btn:hover{transform:translateY(-1px);filter:brightness(1.05);box-shadow:0 16px 40px -12px rgba(255,122,26,.9),inset 0 1px 0 rgba(255,255,255,.35)}
+  .btn.ghost:hover{border-color:var(--pumpkin);background:rgba(255,138,31,.08);filter:none}
+}
+/* Pantallas táctiles: botones de al menos 44px de alto para el dedo */
+@media (pointer:coarse){
+  .btn.ghost{min-height:2.75rem}
+}
+
+/* Mensajes */
+.msg{display:flex;gap:.75rem;align-items:flex-start;border:1px solid;border-radius:1rem;padding:1rem 1.15rem;margin-bottom:1.25rem;font-weight:600;backdrop-filter:var(--desenfoque);-webkit-backdrop-filter:var(--desenfoque)}
+.msg::before{flex:none;display:grid;place-items:center;width:1.5rem;height:1.5rem;border-radius:50%;font-weight:800;font-size:.85rem;color:var(--bg)}
+.msg.ok{background:var(--ok-bg);color:var(--ok);border-color:rgba(126,226,160,.3)}
+.msg.ok::before{content:"✓";content:"✓" / "";background:var(--ok)}
+.msg.err{background:var(--err-bg);color:var(--err);border-color:rgba(255,138,128,.3)}
+.msg.err::before{content:"!";content:"!" / "";background:var(--err)}
+.resumen{color:var(--muted);margin:.5rem 0 1.25rem;font-weight:500;font-size:.92rem}
+
+/* Pie de página: versión de la app (tocarla busca actualización) y botón de instalar */
+.pie{display:flex;flex-wrap:wrap;gap:.75rem 1rem;align-items:center;justify-content:space-between;margin-top:3rem;padding-top:1.1rem;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+.pie-acciones{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.pie .btn.ghost{font-size:.85rem;padding:.5rem .9rem}
+.version{font:600 .8rem/1 var(--font-body);color:var(--muted);background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:999px;padding:.5rem .8rem;cursor:pointer;font-variant-numeric:tabular-nums}
+@media (hover:hover){.version:hover{color:var(--ink);border-color:var(--line-fuerte)}}
+
+/* Aviso flotante de versión nueva (cuando hay datos escritos y no conviene recargar solo) */
+.aviso-flotante{position:fixed;left:50%;bottom:max(1rem,env(safe-area-inset-bottom,0px));z-index:20;transform:translateX(-50%);display:flex;align-items:center;gap:.9rem;width:min(32rem,calc(100% - 2rem));padding:.75rem .75rem .75rem 1.1rem;border:1px solid rgba(255,138,31,.45);border-radius:1rem;background:rgba(22,14,40,.97);box-shadow:var(--sombra);font-weight:600;font-size:.92rem}
+.aviso-flotante .btn{width:auto;flex:none;padding:.75rem 1.1rem;font-size:.95rem}
+
+/* Celulares pequeños (iPhone SE, Android de 360px) */
+@media (max-width:400px){
+  .wrap{padding-left:max(1rem,env(safe-area-inset-left,0px));padding-right:max(1rem,env(safe-area-inset-right,0px))}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+}

@@ -1,0 +1,6 @@
+# GitHub Pages: lo que no es de la app no se publica en el sitio (sigue estando en el repositorio)
+exclude:
+  - demo/
+  - supabase/
+  - servidor-local.py
+  - README.md

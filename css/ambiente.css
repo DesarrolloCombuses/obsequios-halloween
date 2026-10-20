@@ -1,0 +1,85 @@
+/* Fondo de noche: cielo, estrellas, luna, murciélagos y neblina. Todo decorativo y detrás del contenido. */
+.cielo{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:
+    radial-gradient(60rem 40rem at 8% -12%,rgba(139,92,246,.30),transparent 60%),
+    radial-gradient(50rem 36rem at 105% 108%,rgba(255,106,31,.16),transparent 60%),
+    linear-gradient(180deg,#0C0716 0%,#130A24 55%,#0C0716 100%);
+}
+
+/* Estrellas en dos capas que titilan a destiempo */
+.estrellas,.estrellas::after{
+  position:absolute;inset:0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%,#fff,transparent),
+    radial-gradient(1px 1px at 27% 8%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 41% 26%,#fff,transparent),
+    radial-gradient(1px 1px at 58% 12%,#fff,transparent),
+    radial-gradient(2px 2px at 73% 22%,#FFE9B8,transparent),
+    radial-gradient(1px 1px at 88% 6%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 94% 34%,#fff,transparent),
+    radial-gradient(1px 1px at 6% 46%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 33% 52%,#fff,transparent),
+    radial-gradient(1px 1px at 66% 44%,#fff,transparent),
+    radial-gradient(1px 1px at 82% 58%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 18% 72%,#fff,transparent),
+    radial-gradient(1px 1px at 52% 78%,#fff,transparent),
+    radial-gradient(1px 1px at 91% 84%,#fff,transparent);
+  opacity:.75;
+}
+.estrellas::after{content:"";transform:translate(3vw,6vh) scale(1.05);opacity:.45}
+@media (prefers-reduced-motion:no-preference){
+  .estrellas{animation:titilar 5s ease-in-out infinite alternate}
+  .estrellas::after{animation:titilar 7s ease-in-out -3s infinite alternate}
+}
+@keyframes titilar{from{opacity:.35}to{opacity:.85}}
+
+/* Luna llena con cráteres; solo en pantallas anchas, fuera de la columna del formulario */
+.luna{
+  position:absolute;top:7vh;right:7vw;width:11rem;aspect-ratio:1;border-radius:50%;
+  background:radial-gradient(circle at 35% 35%,#FFF8E1,#FFE3A3 45%,#F7C873 75%,#E9A94F);
+  box-shadow:0 0 60px 18px rgba(255,214,140,.22),0 0 180px 70px rgba(255,170,80,.10);
+  opacity:.92;
+}
+.luna::before{
+  content:"";position:absolute;inset:0;border-radius:50%;
+  background:
+    radial-gradient(circle at 63% 30%,rgba(196,132,58,.35) 0 8%,transparent 9%),
+    radial-gradient(circle at 38% 64%,rgba(196,132,58,.28) 0 11%,transparent 12%),
+    radial-gradient(circle at 70% 70%,rgba(196,132,58,.22) 0 6%,transparent 7%),
+    radial-gradient(circle at 28% 34%,rgba(196,132,58,.18) 0 5%,transparent 6%);
+}
+@media (max-width:1100px){.luna{display:none}}
+
+/* Murciélagos cruzando el cielo */
+.murcielago{position:absolute;left:0;width:3rem;height:auto;opacity:0}
+.m1{top:14vh}
+.m2{top:34vh;width:2.2rem}
+.m3{top:7vh;width:1.7rem}
+@media (prefers-reduced-motion:no-preference){
+  .m1{animation:vuelo 22s linear -4s infinite}
+  .m2{animation:vuelo 29s linear -15s infinite}
+  .m3{animation:vuelo 35s linear -24s infinite}
+}
+@keyframes vuelo{
+  0%{transform:translate(-10vw,0) rotate(-6deg);opacity:0}
+  6%{opacity:.85}
+  25%{transform:translate(20vw,-4vh) rotate(4deg)}
+  50%{transform:translate(48vw,3vh) rotate(-4deg)}
+  75%{transform:translate(78vw,-3vh) rotate(5deg)}
+  94%{opacity:.85}
+  100%{transform:translate(110vw,1vh) rotate(-3deg);opacity:0}
+}
+
+/* Neblina baja que se desplaza despacio */
+.niebla{
+  position:absolute;left:-10%;right:-10%;bottom:-8vh;height:45vh;
+  background:
+    radial-gradient(50% 60% at 28% 100%,rgba(170,140,255,.16),transparent 70%),
+    radial-gradient(45% 55% at 76% 100%,rgba(170,140,255,.12),transparent 70%);
+  filter:blur(12px);
+}
+@media (prefers-reduced-motion:no-preference){
+  .niebla{animation:deriva 18s ease-in-out infinite alternate}
+}
+@keyframes deriva{to{transform:translateX(5%)}}

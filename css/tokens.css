@@ -1,0 +1,45 @@
+/* Tema "noche de Halloween": colores, tipografías y efectos compartidos */
+:root{
+  color-scheme: dark;
+
+  /* Fondos y superficies */
+  --bg:#0C0716;
+  --surface:#1A1130;
+  --vidrio:rgba(24,15,44,.64);
+  --campo:rgba(255,255,255,.045);
+  --campo-hover:rgba(255,255,255,.07);
+  --line:rgba(196,170,255,.16);
+  --line-fuerte:rgba(196,170,255,.32);
+
+  /* Texto */
+  --ink:#F5F0FF;
+  --muted:#B4A9D1;
+
+  /* Acentos */
+  --pumpkin:#FF8A1F;
+  --pumpkin-ink:#1B0A00;
+  --candy:#FFC44D;
+  --morado:#8B5CF6;
+  --degradado:linear-gradient(135deg,#FFB547 0%,#FF7A1A 55%,#FF5A1F 100%);
+  --brillo-naranja:0 10px 30px -10px rgba(255,122,26,.75);
+
+  /* Estados */
+  --ok:#7EE2A0; --ok-bg:rgba(46,160,90,.14);
+  --err:#FF8A80; --err-bg:rgba(255,77,77,.12);
+  --focus:#FFB547; --focus-anillo:rgba(255,138,31,.28);
+
+  /* Forma */
+  --radio:1.5rem;
+  --sombra:0 30px 80px -30px rgba(0,0,0,.8), inset 0 1px 0 rgba(255,255,255,.05);
+  --desenfoque:blur(16px) saturate(140%);
+
+  /* Tipografías */
+  --font-display:"Bricolage Grotesque",system-ui,sans-serif;
+  --font-body:"Plus Jakarta Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+
+/* En celular el vidrio pasa a fondo casi opaco: desenfocar el fondo animado en cada cuadro
+   gasta batería y traba el desplazamiento en Android de gama baja */
+@media (max-width:640px){
+  :root{--desenfoque:none;--vidrio:rgba(22,14,40,.92)}
+}

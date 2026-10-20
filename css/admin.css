@@ -1,0 +1,21 @@
+/* Panel del equipo (admin.html) */
+.acceso{max-width:28rem;margin:0 auto}
+.acceso fieldset{margin-bottom:1.5rem}
+
+#panel{margin-top:0}
+.sesion{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;justify-content:space-between;margin-bottom:1.75rem;padding:.75rem .9rem .75rem 1.1rem;border:1px solid var(--line);border-radius:1rem;background:var(--vidrio);color:var(--muted);font-size:.92rem;backdrop-filter:var(--desenfoque);-webkit-backdrop-filter:var(--desenfoque)}
+.sesion b{color:var(--ink);font-weight:600;word-break:break-all}
+.sesion-acciones{display:flex;flex-wrap:wrap;gap:.5rem}
+
+/* Indicador de tiempo real: el listado se actualiza solo con cada inscripción */
+.envivo{display:inline-flex;align-items:center;gap:.4rem;margin-left:.5rem;padding:.2rem .6rem;border-radius:999px;background:var(--ok-bg);color:var(--ok);font-size:.75rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;vertical-align:middle}
+.envivo::before{content:"";width:.45rem;height:.45rem;border-radius:50%;background:var(--ok)}
+@media (prefers-reduced-motion:no-preference){
+  .envivo::before{animation:latido 1.8s ease-out infinite}
+}
+@keyframes latido{0%{box-shadow:0 0 0 0 rgba(126,226,160,.6)}100%{box-shadow:0 0 0 .45rem rgba(126,226,160,0)}}
+
+@media (max-width:520px){
+  .sesion-acciones{width:100%}
+  .sesion-acciones .btn{flex:1 1 0}
+}
